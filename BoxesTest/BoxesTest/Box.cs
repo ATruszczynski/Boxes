@@ -23,7 +23,7 @@ namespace BoxesTest
             int tmp = width;
             width = height;
             height = tmp;
-            rotated = true;
+            rotated = !rotated;
         }
     }
 }
