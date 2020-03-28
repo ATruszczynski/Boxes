@@ -36,7 +36,7 @@ namespace BoxesTest
             return boxes;
         }
         /// <summary>
-        /// Function counts the maximal number of boxes on stack. Dynamic programming
+        /// Function counts the maximal stack of boxes. Dynamic programming
         /// </summary>
         /// <param name="boxes">sorted list of boxes</param>
         /// <returns>number of boxes that can be put on top of each other on stack</returns>
@@ -57,7 +57,7 @@ namespace BoxesTest
                     // and  if with you put ith box on the jth you could get higher than if you just have what you have
                     if (boxes[j].width >= boxes[i].width && boxes[j].length >= boxes[i].length && Heights[i].Count < Heights[j].Count + 1)
                     {
-                        //NIE WIEM CZY TO JEDNAK NIE POWINNO BRAC ELEMENTU Z BOXES. boxes[i]
+                        //add the ith element to the jth stack and keep it in ith stack.
                         Heights[i] = Heights[j].Concat(new List<Box>(){ boxes[i] }).ToList();
                     }
                 }
@@ -92,9 +92,7 @@ namespace BoxesTest
         {
             boxes = RotateBoxesToProper(boxes);
             boxes = SortBoxes(boxes);
-            var stackedBoxes = GetSequence(boxes);
-            Console.WriteLine($"{stackedBoxes.Count}");
-            return stackedBoxes;
+            return GetSequence(boxes);
         }
 
     }
