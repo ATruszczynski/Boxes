@@ -36,30 +36,52 @@ namespace BoxesTest
             return boxes;
         }
         /// <summary>
-        /// Function counts the maximal number of boxes on stack.
+        /// Function counts the maximal number of boxes on stack. Dynamic programming
         /// </summary>
         /// <param name="boxes">sorted list of boxes</param>
         /// <returns>number of boxes that can be put on top of each other on stack</returns>
-        static public int CountHeight(List<Box> boxes)
+        static public  List<Box> GetSequence(List<Box> boxes)
         {
-            // 0 means there is just one box, 1 that there is one box below
-            int[] Heights = new int[boxes.Count];
+            // 1 means there is just one box, 2 that there is one box below
+            List<Box>[] Heights = new  List<Box>[boxes.Count];
+            for (int i = 0; i < boxes.Count; i++)
+            {
+                Heights[i] =  new List<Box>() { boxes[i] };
+            }
             //O(n^2)
             for (int i = 1; i < boxes.Count; i++)
             {
                 for (int j = i - 1; j >= 0; j--)
                 {
-                    // checks wether you can put the ith box on the jth box
-                    if (boxes[j].width >= boxes[i].width && boxes[j].length >= boxes[i].length)
+                    // checks wether you can put the ith box on the jth box 
+                    // and  if with you put ith box on the jth you could get higher than if you just have what you have
+                    if (boxes[j].width >= boxes[i].width && boxes[j].length >= boxes[i].length && Heights[i].Count < Heights[j].Count + 1)
                     {
-//checks which of the stacks would be higher
-                        Heights[i] = Math.Max(Heights[j] + 1, Heights[i]);
+                        //NIE WIEM CZY TO JEDNAK NIE POWINNO BRAC ELEMENTU Z BOXES. boxes[i]
+                        Heights[i] = Heights[j].Concat(new List<Box>(){ boxes[i] }).ToList();
                     }
                 }
             }
             //Max is O(n)
-            return Heights.Max() + 1;
+            return GetMax(Heights);
+        }
 
+        /// <summary>
+        /// Finds the highest stack of boxes
+        /// </summary>
+        /// <param name="heights">table of stacks, heights[i] - stack of boxes that ith box is the highest</param>
+        /// <returns>Maximum stack</returns>
+       public static List<Box> GetMax(List<Box>[] heights)
+        {
+            List<Box> max = heights[0];
+            for (int i = 0; i < heights.Length; i++)
+            {
+                if(heights[i].Count>max.Count)
+                {
+                    max = heights[i];
+                }
+            }
+            return max;
         }
         /// <summary>
         /// Function runs the whole algorithm
@@ -70,10 +92,9 @@ namespace BoxesTest
         {
             boxes = RotateBoxesToProper(boxes);
             boxes = SortBoxes(boxes);
-            Console.WriteLine(CountHeight(boxes));
-            //gettables
-            //getstack
-            return boxes;
+            var stackedBoxes = GetSequence(boxes);
+            Console.WriteLine($"{stackedBoxes.Count}");
+            return stackedBoxes;
         }
 
     }

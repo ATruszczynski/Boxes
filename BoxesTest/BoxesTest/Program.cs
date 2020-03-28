@@ -37,17 +37,17 @@ namespace BoxesTest
 
             var boxes = ReadBoxes();
 
-            Console.WriteLine("All Boxes:");
-            foreach (var box in boxes)
-            {
-                Console.WriteLine($"{box}");
-            }
+            //Console.WriteLine("All Boxes:");
+            //foreach (var box in boxes)
+            //{
+            //    Console.WriteLine($"{box}");
+            //}
 
 
 
             var stackedBoxes = BoxStackingAlgorithm.Count(boxes);
 
-
+            Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             foreach (var box in stackedBoxes)
             {
