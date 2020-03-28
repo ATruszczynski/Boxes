@@ -31,9 +31,15 @@ namespace BoxesTest
         /// <returns>List of sorted boxes</returns>
         static public List<Box> SortBoxes(List<Box> boxes)
         {
+            //On average, this method is an O(n log n) operation, where n is Count; in the worst case it is an O(n ^ 2)
             boxes.Sort((x, y) => { return x.width > y.width ? -1 : (x.width < y.width ? 1 : (x.length >= y.length ? -1 : 1)); });
             return boxes;
         }
+        /// <summary>
+        /// Function counts the maximal number of boxes on stack.
+        /// </summary>
+        /// <param name="boxes">sorted list of boxes</param>
+        /// <returns>number of boxes that can be put on top of each other on stack</returns>
         static public int CountHeight(List<Box> boxes)
         {
             // 0 means there is just one box, 1 that there is one box below
@@ -43,14 +49,16 @@ namespace BoxesTest
             {
                 for (int j = i - 1; j >= 0; j--)
                 {
+                    // checks wether you can put the ith box on the jth box
                     if (boxes[j].width >= boxes[i].width && boxes[j].length >= boxes[i].length)
                     {
+//checks which of the stacks would be higher
                         Heights[i] = Math.Max(Heights[j] + 1, Heights[i]);
                     }
                 }
             }
-          //Max is O(n)
-            return Heights.Max();
+            //Max is O(n)
+            return Heights.Max() + 1;
 
         }
         /// <summary>
@@ -62,7 +70,7 @@ namespace BoxesTest
         {
             boxes = RotateBoxesToProper(boxes);
             boxes = SortBoxes(boxes);
-            Console.WriteLine(CountHeight(boxes)+1);
+            Console.WriteLine(CountHeight(boxes));
             //gettables
             //getstack
             return boxes;
