@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoxesTest
 {
-    class Box
+    public class Box
     {
         public int width;
         public int height;
@@ -18,12 +18,16 @@ namespace BoxesTest
             height = h;
         }
 
-        public void Invert()
+        public void Rotate()
         {
             int tmp = width;
             width = height;
             height = tmp;
             rotated = !rotated;
+        }
+        public override string ToString()
+        {
+            return String.Format("Box is {0}rotated. width: {1} height: {2}", (rotated ? "not " : ""), width, height);
         }
     }
 }
