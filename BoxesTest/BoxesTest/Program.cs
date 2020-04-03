@@ -88,7 +88,6 @@ namespace BoxesTest
                     streamWritter.WriteLine($"{box}");
                 }
             }
-            throw new Exception();
 
         }
         static void Main(string[] args)
@@ -102,6 +101,7 @@ namespace BoxesTest
             {
                 if (path == "!T")
                 {
+                    path = "task.txt";
                     boxes = ReadBoxes();
                 }
                 else
@@ -123,6 +123,7 @@ namespace BoxesTest
             Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             PrintTheBoxes(stackedBoxes);
+            SaveSolutionToFile(boxes, path);
             
         }
     }
