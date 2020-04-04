@@ -70,10 +70,25 @@ namespace BoxesTest
         }
         static public void PrintTheBoxes(List<Box> boxes)
         {
+            Console.WriteLine($"{boxes.Count}");
             foreach (var box in boxes)
             {
                 Console.WriteLine($"{box}");
             }
+        }
+        static public void SaveSolutionToFile(List<Box> boxes, string path)
+        {
+            path = "out-" + path;
+            var fileStream = new FileStream(path, FileMode.Create,  FileAccess.Write );
+            using (var streamWritter = new StreamWriter(fileStream, Encoding.UTF8))
+            {
+                streamWritter.WriteLine($"{boxes.Count}");
+                foreach (var box in boxes)
+                {
+                    streamWritter.WriteLine($"{box}");
+                }
+            }
+
         }
         static void Main(string[] args)
         {
@@ -86,6 +101,7 @@ namespace BoxesTest
             {
                 if (path == "!T")
                 {
+                    path = "task.txt";
                     boxes = ReadBoxes();
                 }
                 else
@@ -107,7 +123,8 @@ namespace BoxesTest
             Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             PrintTheBoxes(stackedBoxes);
-            Console.ReadLine();
+            SaveSolutionToFile(boxes, path);
+            
         }
     }
 }

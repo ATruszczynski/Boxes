@@ -78,7 +78,7 @@ namespace BoxesTest
        public static List<Box> GetMax(List<Box>[] heights)
         {
             List<Box> max = heights[0];
-            for (int i = 0; i < heights.Length; i++)
+            for (int i = 1; i < heights.Length; i++)
             {
                 if(heights[i].Count>max.Count)
                 {
