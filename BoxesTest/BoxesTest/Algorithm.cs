@@ -48,6 +48,10 @@ namespace BoxesTest
             {
                 Heights[i] =  new List<Box>() { boxes[i] };
             }
+            for (int i = 0; i < Heights.Length; i++)
+            {
+                Console.WriteLine($"{Heights[i][0].width} {Heights[i][0].length}");
+            }
             //O(n^2)
             for (int i = 1; i < boxes.Count; i++)
             {

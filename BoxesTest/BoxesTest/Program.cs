@@ -107,7 +107,7 @@ namespace BoxesTest
             Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             PrintTheBoxes(stackedBoxes);
-
+            Console.ReadLine();
         }
     }
 }
