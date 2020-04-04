@@ -78,7 +78,10 @@ namespace BoxesTest
         }
         static public void SaveSolutionToFile(List<Box> boxes, string path)
         {
-            path = "out-" + path;
+            string dirName = Path.GetDirectoryName(path);
+            string fileName = Path.GetFileName(path);
+
+            path = dirName + Path.DirectorySeparatorChar + "out-" + fileName;
             var fileStream = new FileStream(path, FileMode.Create,  FileAccess.Write );
             using (var streamWritter = new StreamWriter(fileStream, Encoding.UTF8))
             {
@@ -120,11 +123,11 @@ namespace BoxesTest
             var stackedBoxes = BoxStackingAlgorithm.Count(boxes);
 
 
-            Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
+            //Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             PrintTheBoxes(stackedBoxes);
             SaveSolutionToFile(boxes, path);
-            
+            Console.ReadKey();
         }
     }
 }
