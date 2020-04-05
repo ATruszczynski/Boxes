@@ -85,7 +85,7 @@ namespace BoxesTest
                 streamWritter.WriteLine($"{boxes.Count}");
                 foreach (var box in boxes)
                 {
-                    streamWritter.WriteLine($"{box}");
+                    streamWritter.WriteLine($"{box.width} {box.length}");
                 }
             }
 
@@ -123,7 +123,7 @@ namespace BoxesTest
             Console.WriteLine($"Height of the solution: {stackedBoxes.Count}");
             Console.WriteLine("Solution:");
             PrintTheBoxes(stackedBoxes);
-            SaveSolutionToFile(boxes, path);
+            SaveSolutionToFile(stackedBoxes, path);
             
         }
     }
