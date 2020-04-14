@@ -86,9 +86,11 @@ namespace BoxesTest
             using (var streamWritter = new StreamWriter(fileStream, Encoding.UTF8))
             {
                 streamWritter.WriteLine($"{boxes.Count}");
+                Console.WriteLine($"{boxes.Count}");
                 foreach (var box in boxes)
                 {
                     streamWritter.WriteLine($"{box.width} {box.length}");
+                    Console.WriteLine($"{box.width} {box.length}");
                 }
             }
 
@@ -104,7 +106,8 @@ namespace BoxesTest
             {
                 if (path == "!T")
                 {
-                    path = "task.txt";
+                    var d = DateTime.Now;
+                    path = $"./task_{d.Hour}_{d.Minute}_{d.Second}.txt";
                     boxes = ReadBoxes();
                 }
                 else
@@ -124,7 +127,7 @@ namespace BoxesTest
             var stackedBoxes = BoxStackingAlgorithm.Count(boxes);
 
             Console.WriteLine("Solution:");
-            PrintTheBoxes(stackedBoxes);
+            //PrintTheBoxes(stackedBoxes);
             SaveSolutionToFile(stackedBoxes, path);
             
             Console.ReadKey();
