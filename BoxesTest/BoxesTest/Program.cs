@@ -1,6 +1,7 @@
 ﻿using BoxesTest.Testing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -96,9 +97,49 @@ namespace BoxesTest
             }
 
         }
+
+
+        static void Test(string testDirPath, string resultDirPath, int repetitions)
+        {
+            var testFilesPaths = Directory.GetFiles(testDirPath, "*.txt");
+            var outDir = Directory.CreateDirectory(resultDirPath);
+            var now = DateTime.Now;
+            string resultFilePath = $"{outDir.FullName}{Path.DirectorySeparatorChar}test_{now.Hour}_{now.Minute}_{now.Second}.csv";
+            var resultFileStream = new StreamWriter(resultFilePath);
+            resultFileStream.WriteLine("name,boxCount,solutionCount,time");
+
+            foreach (var testFilePath in testFilesPaths)
+            {
+                var testBoxes = ReadBoxesFromFile(testFilePath);
+
+                Stopwatch stopwatch = new Stopwatch();
+
+                var result = new List<Box>();
+
+                stopwatch.Start();
+                for (int i = 0; i < repetitions; i++)
+                {
+                    result = BoxStackingAlgorithm.Count(testBoxes);
+                }
+                stopwatch.Stop();
+                var l = stopwatch.ElapsedMilliseconds / repetitions;
+                resultFileStream.WriteLine($"{Path.GetFileName(testFilePath)},{testBoxes.Count},{result.Count},{stopwatch.ElapsedMilliseconds/repetitions}");
+            }
+
+            resultFileStream.Flush();
+            resultFileStream.Close();
+        }
+
+        static string GetRoundedDot(double value, int deciamals = 2)
+        {
+            return Math.Round(value, 2).ToString("#0.00");
+        }
+
+
         static void Main(string[] args)
         {
-            TestGenerator.GenerateTestsInFiles(20, 5, 10, 1, 5, 1, 5, "Desu");
+            TestGenerator.GenerateTestsInFiles(20, 5, 10, 1, 10, 1, 5, "Desu", 1001);
+            Test("Desu", "Desu2", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
             var path = Console.ReadLine();
