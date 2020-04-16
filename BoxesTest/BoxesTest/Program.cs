@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoxesTest.Testing;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -97,6 +98,7 @@ namespace BoxesTest
         }
         static void Main(string[] args)
         {
+            TestGenerator.GenerateTestsInFiles(20, 5, 10, 1, 5, 1, 5, "Desu");
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
             var path = Console.ReadLine();
