@@ -108,10 +108,20 @@ namespace BoxesTest
             var resultFileStream = new StreamWriter(resultFilePath);
             resultFileStream.WriteLine("name,boxCount,solutionCount,time");
 
+            Dictionary<string, List<Box>> tests = new Dictionary<string, List<Box>>();
+            double totalJob = 0;
+
             foreach (var testFilePath in testFilesPaths)
             {
-                var testBoxes = ReadBoxesFromFile(testFilePath);
+                var list = ReadBoxesFromFile(testFilePath);
+                tests[testFilePath] = list;
+                totalJob += list.Count * list.Count;
+            }
 
+            double currentJob = 0;
+            foreach (var testFilePath in testFilesPaths)
+            {
+                var testBoxes = tests[testFilePath];
                 Stopwatch stopwatch = new Stopwatch();
 
                 var result = new List<Box>();
@@ -123,7 +133,10 @@ namespace BoxesTest
                 }
                 stopwatch.Stop();
                 var l = stopwatch.ElapsedMilliseconds / repetitions;
-                resultFileStream.WriteLine($"{Path.GetFileName(testFilePath)},{testBoxes.Count},{result.Count},{stopwatch.ElapsedMilliseconds/repetitions}");
+                resultFileStream.WriteLine($"{Path.GetFileName(testFilePath)},{testBoxes.Count},{result.Count},{stopwatch.ElapsedMilliseconds / repetitions}");
+
+                currentJob += testBoxes.Count * testBoxes.Count;
+                Console.WriteLine($"Tests completion: {Math.Round(currentJob / totalJob * 100, 4).ToString("#0.0000")} %");
             }
 
             resultFileStream.Flush();
@@ -138,7 +151,7 @@ namespace BoxesTest
 
         static void Main(string[] args)
         {
-            TestGenerator.GenerateTestsInFiles(20, 5, 10, 1, 10, 1, 5, "Desu", 1001);
+            TestGenerator.GenerateTestsInFiles(300, 10, 2000, 1, 100, 1, 50, "Desu", 1001);
             Test("Desu", "Desu2", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
