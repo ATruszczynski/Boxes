@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Math;
 
 namespace BoxesTest
 {
@@ -16,7 +17,7 @@ namespace BoxesTest
         /// </summary>
         /// <param name="path">path to the file with the boxes configuration</param>
         /// <returns></returns>
-        static List<Box> ReadBoxesFromFile(string path)
+        public static List<Box> ReadBoxesFromFile(string path)
         {
             var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
@@ -99,60 +100,13 @@ namespace BoxesTest
         }
 
 
-        static void Test(string testDirPath, string resultDirPath, int repetitions)
-        {
-            var testFilesPaths = Directory.GetFiles(testDirPath, "*.txt");
-            var outDir = Directory.CreateDirectory(resultDirPath);
-            var now = DateTime.Now;
-            string resultFilePath = $"{outDir.FullName}{Path.DirectorySeparatorChar}test_{now.Hour}_{now.Minute}_{now.Second}.csv";
-            var resultFileStream = new StreamWriter(resultFilePath);
-            resultFileStream.WriteLine("name,boxCount,solutionCount,time");
-
-            Dictionary<string, List<Box>> tests = new Dictionary<string, List<Box>>();
-            double totalJob = 0;
-
-            foreach (var testFilePath in testFilesPaths)
-            {
-                var list = ReadBoxesFromFile(testFilePath);
-                tests[testFilePath] = list;
-                totalJob += list.Count * list.Count;
-            }
-
-            double currentJob = 0;
-            foreach (var testFilePath in testFilesPaths)
-            {
-                var testBoxes = tests[testFilePath];
-                Stopwatch stopwatch = new Stopwatch();
-
-                var result = new List<Box>();
-
-                stopwatch.Start();
-                for (int i = 0; i < repetitions; i++)
-                {
-                    result = BoxStackingAlgorithm.Count(testBoxes);
-                }
-                stopwatch.Stop();
-                var l = stopwatch.ElapsedMilliseconds / repetitions;
-                resultFileStream.WriteLine($"{Path.GetFileName(testFilePath)},{testBoxes.Count},{result.Count},{stopwatch.ElapsedMilliseconds / repetitions}");
-
-                currentJob += testBoxes.Count * testBoxes.Count;
-                Console.WriteLine($"Tests completion: {Math.Round(currentJob / totalJob * 100, 4).ToString("#0.0000")} %");
-            }
-
-            resultFileStream.Flush();
-            resultFileStream.Close();
-        }
-
-        static string GetRoundedDot(double value, int deciamals = 2)
-        {
-            return Math.Round(value, 2).ToString("#0.00");
-        }
+       
 
 
         static void Main(string[] args)
         {
-            TestGenerator.GenerateTestsInFiles(300, 10, 2000, 1, 100, 1, 50, "Desu", 1001);
-            Test("Desu", "Desu2", 10);
+            TestGenerator.GenerateTestsInFiles(50, 10, 2000, 10, 20, 1, 50, "Desu", 1001, false);
+            Tester.Test("Desu", "Desu2", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
             var path = Console.ReadLine();
@@ -180,7 +134,7 @@ namespace BoxesTest
                 return;
             }
 
-            var stackedBoxes = BoxStackingAlgorithm.Count(boxes);
+            var stackedBoxes = BoxStackingAlgorithm.Compute(boxes);
 
             Console.WriteLine("Solution:");
             //PrintTheBoxes(stackedBoxes);

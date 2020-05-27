@@ -103,7 +103,7 @@ namespace BoxesTest
         /// </summary>
         /// <param name="boxes">List of all the boxes</param>
         /// <returns>List of stacked boxes</returns>
-        static public List<Box> Count(List<Box> boxes)
+        static public List<Box> Compute(List<Box> boxes)
         {
             boxes = RotateBoxesToProper(boxes);
             boxes = SortBoxes(boxes);
