@@ -105,8 +105,8 @@ namespace BoxesTest
 
         static void Main(string[] args)
         {
-            TestGenerator.GenerateTestsInFiles(50, 10, 2000, 10, 20, 1, 50, "Desu", 1001, false);
-            Tester.Test("Desu", "Desu2", 10);
+            //TestGenerator.MakeTests(100, 100, 1000, 200, 200, "Tests", 1001, true);
+            //Tester.Test("Tests", "TestResults", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
             var path = Console.ReadLine();
