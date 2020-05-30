@@ -1,9 +1,12 @@
-﻿using System;
+﻿using BoxesTest.Testing;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Math;
 
 namespace BoxesTest
 {
@@ -14,7 +17,7 @@ namespace BoxesTest
         /// </summary>
         /// <param name="path">path to the file with the boxes configuration</param>
         /// <returns></returns>
-        static List<Box> ReadBoxesFromFile(string path)
+        public static List<Box> ReadBoxesFromFile(string path)
         {
             var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
@@ -95,8 +98,15 @@ namespace BoxesTest
             }
 
         }
+
+
+       
+
+
         static void Main(string[] args)
         {
+            //TestGenerator.MakeTests(100, 100, 1000, 200, 200, "Tests", 1001, true);
+            //Tester.Test("Tests", "TestResults", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
             var path = Console.ReadLine();
@@ -124,7 +134,7 @@ namespace BoxesTest
                 return;
             }
 
-            var stackedBoxes = BoxStackingAlgorithm.Count(boxes);
+            var stackedBoxes = BoxStackingAlgorithm.Compute(boxes);
 
             Console.WriteLine("Solution:");
             //PrintTheBoxes(stackedBoxes);

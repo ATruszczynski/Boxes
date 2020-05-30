@@ -32,7 +32,18 @@ namespace BoxesTest
         static public List<Box> SortBoxes(List<Box> boxes)
         {
             //On average, this method is an O(n log n) operation, where n is Count; in the worst case it is an O(n ^ 2)
-            boxes.Sort((x, y) => { return x.width > y.width ? -1 : (x.width < y.width ? 1 : (x.length >= y.length ? -1 : 1)); });
+            //boxes.Sort((x, y) => { return x.width > y.width ? -1 : (x.width < y.width ? 1 : (x.length >= y.length ? -1 : 1)); });
+            boxes.Sort((x, y) => {
+                int res = 0;
+
+                if (x.width > y.width)
+                    res = -1;
+                if (x.width == y.width)
+                    res = y.length.CompareTo(x.length);
+                if (x.width < y.width)
+                    res = 1;
+                return res;
+            });
             return boxes;
         }
         /// <summary>
@@ -92,7 +103,7 @@ namespace BoxesTest
         /// </summary>
         /// <param name="boxes">List of all the boxes</param>
         /// <returns>List of stacked boxes</returns>
-        static public List<Box> Count(List<Box> boxes)
+        static public List<Box> Compute(List<Box> boxes)
         {
             boxes = RotateBoxesToProper(boxes);
             boxes = SortBoxes(boxes);
