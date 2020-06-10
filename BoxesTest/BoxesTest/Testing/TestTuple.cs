@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BoxesTest.Testing
 {
-    class TestTuple
+    public class TestTuple
     {
         public int HowMany { get; set; }
         public int MinBoxCount { get; set; }

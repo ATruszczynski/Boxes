@@ -73,10 +73,10 @@ namespace BoxesTest
         }
         static public void PrintTheBoxes(List<Box> boxes)
         {
-            Console.WriteLine($"{boxes.Count}");
+            Console.WriteLine($"Boxes in solution {boxes.Count}");
             foreach (var box in boxes)
             {
-                Console.WriteLine($"{box}");
+                Console.WriteLine($"{box.width} {box.length}");
             }
         }
         static public void SaveSolutionToFile(List<Box> boxes, string path)
@@ -89,11 +89,11 @@ namespace BoxesTest
             using (var streamWritter = new StreamWriter(fileStream, Encoding.UTF8))
             {
                 streamWritter.WriteLine($"{boxes.Count}");
-                Console.WriteLine($"{boxes.Count}");
+                //Console.WriteLine($"{boxes.Count}");
                 foreach (var box in boxes)
                 {
                     streamWritter.WriteLine($"{box.width} {box.length}");
-                    Console.WriteLine($"{box.width} {box.length}");
+                    //Console.WriteLine($"{box.width} {box.length}");
                 }
             }
 
@@ -117,7 +117,7 @@ namespace BoxesTest
                 if (path == "!T")
                 {
                     var d = DateTime.Now;
-                    path = $"./task_{d.Hour}_{d.Minute}_{d.Second}.txt";
+                    path = $"./manual_test_{d.Hour}_{d.Minute}_{d.Second}.txt";
                     boxes = ReadBoxes();
                 }
                 else
@@ -136,11 +136,35 @@ namespace BoxesTest
 
             var stackedBoxes = BoxStackingAlgorithm.Compute(boxes);
 
-            Console.WriteLine("Solution:");
-            //PrintTheBoxes(stackedBoxes);
-            SaveSolutionToFile(stackedBoxes, path);
-            
-            Console.ReadKey();
+            Console.WriteLine("\nSolution:");
+            PrintTheBoxes(stackedBoxes);
+            Console.WriteLine();
+
+            bool loop = true;
+
+            while (loop)
+            {
+                Console.WriteLine("Do you want to save solution (y/n)?");
+                string opt = Console.ReadLine();
+
+                if (opt == "y")
+                {
+                    SaveSolutionToFile(stackedBoxes, path);
+                    Console.WriteLine("Output file saved");
+                    loop = false;
+                }
+                else if (opt == "n")
+                {
+                    Console.WriteLine("Output file not saved");
+                    loop = false;
+                }
+                else
+                {
+                    Console.WriteLine("Option not recognised");
+                }
+            }
+            Console.ReadLine();
         }
+
     }
 }

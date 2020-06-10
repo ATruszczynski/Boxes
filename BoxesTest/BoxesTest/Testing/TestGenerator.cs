@@ -6,21 +6,15 @@ using System.Text;
 
 namespace BoxesTest.Testing
 {
-    class TestGenerator
+    public class TestGenerator
     {
-        static Random Random { get; set; }
+        public static Random Random { get; set; }
         static int TestNumber = 0;
         public static void GenerateTestsInFiles(int howMany, int minBoxCount, int maxBoxCount, int minW, int maxW, int minL, int maxL, string dirPath, int seed, bool appendTests)
         {
             var dir = Directory.CreateDirectory(dirPath);
             
-            if(!appendTests)
-            {
-                foreach(var file in dir.GetFiles())
-                {
-                    file.Delete();
-                }
-            }
+            
 
             for (int i = 0; i < howMany; i++)
             {
