@@ -80,7 +80,7 @@ namespace TestGenApp
 
             while (loop)
             {
-                Console.WriteLine("Podaj ścieżke do folderu, w którym testy mają wygenerowane (folder zostanie stworzony, jeśli nie istnieje)");
+                Console.WriteLine("Podaj ścieżke do folderu, w którym testy mają być wygenerowane (folder zostanie stworzony, jeśli nie istnieje)");
                 dirPath = Console.ReadLine();
                 loop = string.IsNullOrEmpty(dirPath);
             }
