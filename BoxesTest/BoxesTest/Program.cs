@@ -73,7 +73,7 @@ namespace BoxesTest
         }
         static public void PrintTheBoxes(List<Box> boxes)
         {
-            Console.WriteLine($"Boxes in solution {boxes.Count}");
+            Console.WriteLine($"{boxes.Count}");
             foreach (var box in boxes)
             {
                 Console.WriteLine($"{box.width} {box.length}");
@@ -82,6 +82,8 @@ namespace BoxesTest
         static public void SaveSolutionToFile(List<Box> boxes, string path)
         {
             string dirName = Path.GetDirectoryName(path);
+            if (string.IsNullOrEmpty(dirName))
+                dirName = Directory.GetCurrentDirectory();
             string fileName = Path.GetFileName(path);
 
             path = dirName + Path.DirectorySeparatorChar + "out-" + fileName;
@@ -105,7 +107,7 @@ namespace BoxesTest
 
         static void Main(string[] args)
         {
-            //TestGenerator.MakeTests(100, 100, 1000, 200, 200, "Tests", 1001, true);
+            //TestGenerator.MakeTests(100, 100, 1000, 200, 200, "Tests", 1001, false);
             //Tester.Test("Tests", "TestResults", 10);
 
             Console.WriteLine("Give the path to the file, if you want to write to terminal write: !T");
